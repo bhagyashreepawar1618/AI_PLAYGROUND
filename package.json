@@ -4,7 +4,7 @@
   "description": "\"Ai fullstack project \"",
   "license": "ISC",
   "author": "Bhagyashree Gorakh Pawar",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js"
