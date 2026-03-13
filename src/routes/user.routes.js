@@ -13,3 +13,5 @@ router.route('/register-user').post(
   ]),
   registerUser
 );
+
+export default router;
