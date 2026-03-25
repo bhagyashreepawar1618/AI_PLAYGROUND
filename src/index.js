@@ -1,7 +1,5 @@
 import app from './app.js';
-import dotenv from 'dotenv';
 import { connect_databse } from './database/index.js';
-dotenv.config();
 
 connect_databse()
   .then(() => {
