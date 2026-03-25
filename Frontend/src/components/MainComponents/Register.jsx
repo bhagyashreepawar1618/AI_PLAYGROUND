@@ -10,6 +10,8 @@ const Register = () => {
     profilePicture: null,
   });
 
+  const [loading, setLoading] = useState(false); // 🔥 NEW
+
   const handleChange = e => {
     const { name, value, files } = e.target;
 
@@ -22,6 +24,7 @@ const Register = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    setLoading(true); // 🔥 START LOADING
 
     try {
       const data = new FormData();
@@ -40,7 +43,9 @@ const Register = () => {
       alert('User is registered Successfully..!!');
     } catch (err) {
       console.error(err);
-      alert('Error occurred while registering user', err);
+      alert('Error occurred while registering user');
+    } finally {
+      setLoading(false); // 🔥 STOP LOADING
     }
   };
 
@@ -100,11 +105,17 @@ const Register = () => {
             className="border p-2 rounded-lg"
           />
 
+          {/* 🔥 BUTTON WITH LOADING */}
           <button
             type="submit"
-            className="bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition"
+            disabled={loading}
+            className={`py-3 rounded-lg font-semibold text-white transition ${
+              loading
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-purple-600 hover:bg-purple-700'
+            }`}
           >
-            Register
+            {loading ? 'Registering...' : 'Register'}
           </button>
         </form>
       </div>
