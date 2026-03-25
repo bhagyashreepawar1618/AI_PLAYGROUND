@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -19,10 +20,28 @@ const Register = () => {
     }
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    console.log(formData);
-    // later we will send this data to backend
+
+    try {
+      const data = new FormData();
+
+      data.append('fullname', formData.name);
+      data.append('username', formData.username);
+      data.append('email', formData.email);
+      data.append('password', formData.password);
+      data.append('profilePicture', formData.profilePicture);
+
+      const res = await axios.post(
+        'http://localhost:8000/api/v1/user/register-user',
+        data
+      );
+
+      alert('User is registered Successfully..!!');
+    } catch (err) {
+      console.error(err);
+      alert('Error occurred while registering user', err);
+    }
   };
 
   return (
@@ -83,7 +102,7 @@ const Register = () => {
 
           <button
             type="submit"
-            className="bg-brand-gradient text-white py-3 rounded-lg font-semibold hover:opacity-90 transition"
+            className="bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition"
           >
             Register
           </button>
