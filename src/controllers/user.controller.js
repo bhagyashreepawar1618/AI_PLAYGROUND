@@ -6,7 +6,10 @@ import uploadOnCloudinary from '../utils/cloudinary.js';
 
 export const registerUser = asyncHandler(async (req, res) => {
   //take all inputs from user
+  console.log('hello from controlller');
   const { fullname, email, username, password } = req.body;
+
+  console.log('inputs=', fullname, email);
 
   //validation
   if (!fullname || !username || !email || !password) {
@@ -23,7 +26,9 @@ export const registerUser = asyncHandler(async (req, res) => {
   }
 
   //take profile picture
-  const profileLocalPath = req.file?.profilePicture?.[0]?.path;
+  const profileLocalPath = req.files?.profilePicture?.[0]?.path;
+
+  console.log('picture=', profileLocalPath);
 
   if (!profileLocalPath) {
     throw new ApiError(400, 'Profile Picture is Required');
@@ -38,7 +43,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     );
   }
 
-  const user = User.create({
+  const user = await User.create({
     fullname,
     email,
     username,
@@ -48,7 +53,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 
   const registeredUser = await User.findById(user._id).select('-password');
 
-  if (!registerUser) {
+  if (!registeredUser) {
     throw new ApiError(500, 'Something went wrong while registering user');
   }
 
