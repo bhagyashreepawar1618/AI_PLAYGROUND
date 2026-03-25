@@ -1,3 +1,54 @@
-﻿# AI_PLAYGROUND
- 
-EduGenie is an AI-powered learning platform that helps users study and explore topics with the help of AI. It includes different sections like study assistance, AI-based explanations, fun Q&A interactions, and guidance for learning or career-related queries. Users can ask questions, get explanations for code or concepts, and interact with AI in an engaging way. The platform also includes authentication and multiple sections to organize learning activities. The goal of this project is to make learning more interactive and personalized using AI APIs.
+# 🚀 AI_Playground
+
+A full-stack MERN application where users can **learn, explore AI tools, solve problems, and have fun** — all in one place.
+
+---
+
+## 🌟 Features
+
+### 🎉 Fun Zone
+
+* Music 🎵
+* Jokes 😂
+* Quotes 💬
+
+### 📚 Study Hub
+
+* Coding guides
+* Problem solving
+* Learning paths
+
+### 🤖 AI Tools
+
+* Mini AI-based tools
+* Experiment with AI concepts
+
+### 🧪 Project Lab
+
+* Build and explore small projects
+
+### 👤 User System
+
+* Register & Login
+* Profile with image upload
+* Secure authentication
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+
+* React ⚛️
+* Tailwind CSS 🎨
+* Framer Motion ✨
+* Axios
+
+### Backend
+
+* Node.js
+* Express.js
+
+### Database
+
+* MongoDB 🍃
