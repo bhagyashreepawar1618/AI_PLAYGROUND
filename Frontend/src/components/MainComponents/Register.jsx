@@ -10,7 +10,7 @@ const Register = () => {
     profilePicture: null,
   });
 
-  const [loading, setLoading] = useState(false); // 🔥 NEW
+  const [loading, setLoading] = useState(false); //  NEW
 
   const handleChange = e => {
     const { name, value, files } = e.target;
@@ -24,7 +24,7 @@ const Register = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    setLoading(true); // 🔥 START LOADING
+    setLoading(true);
 
     try {
       const data = new FormData();
@@ -45,7 +45,7 @@ const Register = () => {
       console.error(err);
       alert('Error occurred while registering user');
     } finally {
-      setLoading(false); // 🔥 STOP LOADING
+      setLoading(false); // STOP LOADING
     }
   };
 
@@ -105,7 +105,7 @@ const Register = () => {
             className="border p-2 rounded-lg"
           />
 
-          {/* 🔥 BUTTON WITH LOADING */}
+          {/* BUTTON WITH LOADING */}
           <button
             type="submit"
             disabled={loading}
