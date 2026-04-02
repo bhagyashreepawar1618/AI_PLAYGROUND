@@ -3,6 +3,7 @@ import ApiError from '../utils/ApiError.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import { User } from '../models/user.model.js';
 import uploadOnCloudinary from '../utils/cloudinary.js';
+import mongoose from 'mongoose';
 
 export const registerUser = asyncHandler(async (req, res) => {
   //take all inputs from user
@@ -60,4 +61,42 @@ export const registerUser = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, registeredUser, 'User registerd successfully'));
+});
+
+export const LoginUser = asyncHandler(async (req, res) => {
+  //take input from user
+  const { username, email } = req.body;
+
+  //validation
+  if (!username || !email) {
+    throw new ApiError(400, 'Username or Email is required');
+  }
+
+  //check if user is registered or not
+  const registeredUser = await User.find({
+    $or: [{ username }, { email }],
+  });
+
+  //if user is not registered throw an error
+  if (registeredUser) {
+    throw new ApiError(400, 'User is not registered');
+  }
+
+  //if user is registered then generate access and refresh Tokens
+  const { accessToken, refreshtoken } = generateAccessAndRefreshTokens(
+    registeredUser._id
+  );
+
+  //send Tokens
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        accessToken,
+        refreshtoken,
+        registeredUser,
+      },
+      'User Loggedin successfully'
+    )
+  );
 });
