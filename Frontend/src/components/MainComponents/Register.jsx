@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, use } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     username: '',
@@ -41,6 +43,7 @@ const Register = () => {
       );
 
       alert('User is registered Successfully..!!');
+      navigate('/login', { replace: true });
     } catch (err) {
       console.error(err);
       alert('Error occurred while registering user');
