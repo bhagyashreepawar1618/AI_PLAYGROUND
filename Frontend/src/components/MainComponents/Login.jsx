@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -13,10 +15,23 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     console.log(formData);
     // later we will send this to backend
+
+    try {
+      const res = await axios.post(
+        'http://localhost:8000/api/v1/user/login-user',
+        formData
+      );
+
+      console.log('response from backend=', res.data.data);
+
+      alert('User Logged In Successfully');
+    } catch (error) {
+      console.log('Error occured while login', error);
+    }
   };
 
   return (
