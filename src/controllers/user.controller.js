@@ -3,7 +3,25 @@ import ApiError from '../utils/ApiError.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import { User } from '../models/user.model.js';
 import uploadOnCloudinary from '../utils/cloudinary.js';
-import mongoose from 'mongoose';
+
+const generateAccessAndRefreshTokens = async userid => {
+  //find that user in database
+  const user = await User.findById(userid).select('-password');
+  console.log('User is=', user);
+
+  //if user is not found
+  if (!user) {
+    throw new ApiError(500, 'User Not found in Database');
+  }
+
+  //if found generate access and refresh tokens
+
+  const accessToken = await user.generateAccessToken();
+  const refreshToken = await user.generateRefreshToken();
+  console.log('Tokens generated successfully..!');
+
+  return { accessToken, refreshToken };
+};
 
 export const registerUser = asyncHandler(async (req, res) => {
   //take all inputs from user
@@ -65,11 +83,11 @@ export const registerUser = asyncHandler(async (req, res) => {
 
 export const LoginUser = asyncHandler(async (req, res) => {
   //take input from user
-  const { username, email } = req.body;
+  const { username, email, password } = req.body;
 
   //validation
   if (!username || !email) {
-    throw new ApiError(400, 'Username or Email is required');
+    throw new ApiError(400, 'Username or Eamil is Required');
   }
 
   //check if user is registered or not
@@ -82,9 +100,19 @@ export const LoginUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, 'User is not registered');
   }
 
-  //if user is registered then generate access and refresh Tokens
+  //check password
+  const user = await User.findById(registeredUser?._id).select('-password');
+
+  const isPassValid = await user.IsPasswordCorrect(password);
+
+  //if password is incorrect
+  if (!isPassValid) {
+    throw new ApiError(400, 'Password Is Incorrect');
+  }
+
+  //if password is correct then generate access and refresh tokens
   const { accessToken, refreshtoken } = generateAccessAndRefreshTokens(
-    registeredUser._id
+    user?._id
   );
 
   //send Tokens
