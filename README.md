@@ -52,3 +52,8 @@ A full-stack MERN application where users can **learn, explore AI tools, solve p
 ### Database
 
 * MongoDB 🍃
+
+  ---
+
+author
+Bhagyashree Pawar
